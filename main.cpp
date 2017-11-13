@@ -184,7 +184,21 @@ bool isValid(string im){
           finalImage[rows][cols] = RGB;
 
         }
+        if (rows == (bmpVector[0].size()/2)) {
+          cout<<"50% completed."<<endl;
+        }
+        if (rows == (bmpVector[0].size()/4)) {
+          cout<<"25% completed."<<endl;
+        }
+        if (rows == (bmpVector[0].size()/10)) {
+          cout<<"10% completed."<<endl;
+        }
+        if (rows == (bmpVector[0].size()*3/4)) {
+          cout<<"75% completed."<<endl;
+        }
+
       }
+      cout<<"COMPLETED"<<endl;
   return finalImage;
   }
 
