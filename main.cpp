@@ -9,23 +9,17 @@ const int maxNumImage = 10; // max number of images
 
 vector<string> getImage();// get images from the user
 bool isValid(string);// check the file name to ensure it is a bmp
-bool sizeCheck(int , int , int, int);
-vector<vector<vector<Pixel> > > createBmpVector(vector<string>);
+bool sizeCheck(int , int , int, int); // check the size of the images and compare to first
+vector<vector<vector<Pixel> > > createBmpVector(vector<string>); // create a 3D vector of images
 vector<vector<Pixel> > collapseVector(vector<vector<vector<Pixel> > > & bmpVector); //collpase the vectors into a single layer with averaged pixels
-void printImage(vector<vector<Pixel> >);
-
+void printImage(vector<vector<Pixel> >); // save the image
 
 int main() {
   vector<vector<vector<Pixel> > > bmpVector;
   Pixel rgb;
-
-bmpVector = createBmpVector(getImage());
-printImage(collapseVector(bmpVector));
-
-
+  printImage(collapseVector(bmpVector = createBmpVector(getImage())));
   return 0;
 }
-
 vector<vector<vector<Pixel> > > createBmpVector(vector<string>fileNames){
   vector<vector<vector<Pixel> > > bmpVector;
   Bitmap image;
@@ -39,7 +33,6 @@ vector<vector<vector<Pixel> > > createBmpVector(vector<string>fileNames){
     }
   return bmpVector;
 }
-
 vector<string> getImage(){
   vector<string> imageVector;
   int count = 0;
@@ -50,18 +43,18 @@ vector<string> getImage(){
   Bitmap image;
   vector<vector<Pixel> > bmp;
   Pixel rgb;
+
   do {
     cout<<"Please enter a file name"<<endl;
     string im;
     cin>>im;
     if (im == "DONE") {
       if (imageVector.size()>1) {
-      return imageVector;
+        return imageVector;
       }
       else{
         cout<<"At least 2 images are required"<<endl;
       }
-
     }
     if (isValid(im) == true) {
       count++;
@@ -81,12 +74,11 @@ vector<string> getImage(){
           cout<<"The images are not the same size"<<endl;
         }
         if (sizeCheck(x, y, checkX, checkY)== true){
-
-        imageVector.push_back(im);
+          imageVector.push_back(im);
+        }
       }
-
-      }
-    }if (isValid(im)== false) {
+    }
+    if (isValid(im)== false) {
       cout<<"Please enter a VALID file name"<<endl;
     }
   } while(count < maxNumImage);
@@ -115,7 +107,6 @@ bool isValid(string im){
   }
 
   vector<vector<Pixel> > collapseVector(vector<vector<vector<Pixel> > > & bmpVector){
-
     int r = 0;
     int g = 0;
     int b = 0;
@@ -125,34 +116,23 @@ bool isValid(string im){
     int bTemp;
     int size = bmpVector.size();
     vector<vector<Pixel> > finalImage;
-
     Bitmap image;
 
-
-    finalImage.resize(bmpVector[0].size());
+    finalImage.resize(bmpVector[0].size());  // size the finalImage vector appropriatly
     for (int x = 0; x < finalImage.size(); x++) {
      finalImage[x].resize(bmpVector[0][0].size());
     }
-
-
-
         for (int rows = 0; rows < bmpVector[0].size(); rows++) {
-
           for (int cols = 0; cols < bmpVector[0][0].size(); cols++) {
-
             for (int images = 0; images < bmpVector.size(); images++) {
-
             r = bmpVector[images][rows][cols].red;
             g = bmpVector[images][rows][cols].green;
             b = bmpVector[images][rows][cols].blue;
-
             RGB = bmpVector[images][rows][cols];
             rTemp = rTemp + r;
             gTemp = gTemp + g;
             bTemp = bTemp + b;
           }
-
-
           r = rTemp/size;
           g = gTemp/size;
           b = bTemp/size;
@@ -160,29 +140,21 @@ bool isValid(string im){
           gTemp = 0;
           bTemp = 0;
             if (r > 255) {  //ensure that the pixels are valid numerically
-              r = 255;
-            }
+              r = 255;}
             if (r < 0) {
-              r = 0;
-            }
-            if (g > 255) {  //ensure that the pixels are valid numerically
-              g = 255;
-            }
+              r = 0;}
+            if (g > 255) {
+              g = 255;}
             if (g < 0) {
-              g = 0;
-            }
-            if (b > 255) {  //ensure that the pixels are valid numerically
-              b = 255;
-            }
+              g = 0;}
+            if (b > 255) {
+              b = 255;}
             if (b < 0) {
-              b = 0;
-            }
+              b = 0;}
           RGB.red = r;
           RGB.green = g;
           RGB.blue = b;
-
           finalImage[rows][cols] = RGB;
-
         }
         if (rows == (bmpVector[0].size()/2)) {
           cout<<"50% completed."<<endl;
@@ -196,7 +168,6 @@ bool isValid(string im){
         if (rows == (bmpVector[0].size()*3/4)) {
           cout<<"75% completed."<<endl;
         }
-
       }
       cout<<"COMPLETED"<<endl;
   return finalImage;
