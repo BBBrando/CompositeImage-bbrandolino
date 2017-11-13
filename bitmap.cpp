@@ -64,15 +64,15 @@ void Bitmap::open(std::string filename)
 
 	if (file.fail())
 	{
-		std::cout<<filename<<" could not be opened. Does it exist? "
-		         <<"Is it already open by another program?\n";
+	//	std::cout<<filename<<" could not be opened. Does it exist? "
+	//	         <<"Is it already open by another program?\n";
 		//pixels.resize(0); //make empty if it isn't already
 	}
 	else
 	{
 		bmpfile_magic magic;
 		file.read((char*)(&magic), sizeof(magic));
-		
+
 		// Check to make sure that the first two bytes of the file are the "BM"
 		// identifier that identifies a bitmap image.
 		if (magic.magic[0] != 'B' || magic.magic[1] != 'M')
@@ -149,7 +149,7 @@ void Bitmap::open(std::string filename)
 /**
  * Saves the current image, represented by the matrix of pixels, as a
  * Windows BMP file with the name provided by the parameter. File extension
- * is not forced but should be .bmp. Any errors will cout and will NOT 
+ * is not forced but should be .bmp. Any errors will cout and will NOT
  * attempt to save the file.
  *
  * @param name of the filename to be written as a bmp image
@@ -162,7 +162,7 @@ void Bitmap::save(std::string filename)
 	{
 		std::cout<<filename<<" could not be opened for editing. "
 		         <<"Is it already open by another program or is it read-only?\n";
-		
+
 	}
 	else if( !isImage() )
 	{
@@ -221,7 +221,7 @@ void Bitmap::save(std::string filename)
 		file.close();
 	}
 }
-	
+
 // ----------------------------------------------------------------------------
 /**
   * Validates whether or not the current matrix of pixels represents a
@@ -271,11 +271,11 @@ PixelMatrix Bitmap::toPixelMatrix()
 	if( isImage() )
 	{
 		return pixels;
-	}	
+	}
 	else
 	{
 		return PixelMatrix();
-	}	
+	}
 }
 
 // ----------------------------------------------------------------------------
